@@ -1,0 +1,25 @@
+:host {
+    height: 100vh;
+    .sidenav-container {
+        height: 100%;
+    }
+    .sidenav {
+        // margin-top: 100px;
+        width: 200px;
+    }
+    .sidenav .mat-toolbar {
+        background: inherit;
+    }
+    .mat-toolbar.mat-primary {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    .default-page {
+        height: 100%;
+        border: 1px solid red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

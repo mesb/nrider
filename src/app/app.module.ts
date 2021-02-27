@@ -10,10 +10,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { RiderShellComponent } from './rider-shell/rider-shell.component';
+import { IndexComponent } from './pages/index/index.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		RiderShellComponent,
+		IndexComponent,
 	],
 	imports: [
 		BrowserModule,
