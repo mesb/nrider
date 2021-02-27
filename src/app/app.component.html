@@ -1,1 +1,22 @@
-<app-ride-shell></app-ride-shell>
+<mat-toolbar class="mat-elevation-z22" color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="!!menuBtn">
+		<mat-icon aria-label="Side nav toggle icon">
+			menu
+		</mat-icon>
+	  </button>
+    <span>nrider</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" [fixedInViewport]="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!!sideNav">
+        <!-- <mat-toolbar>Menu</mat-toolbar> -->
+        <mat-nav-list>
+            <a mat-list-item href="#">Link 1</a>
+            <a mat-list-item href="#">Link 2</a>
+            <a mat-list-item href="#">Link 3</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <!-- Add Content Here -->
+    </mat-sidenav-content>
+</mat-sidenav-container>
