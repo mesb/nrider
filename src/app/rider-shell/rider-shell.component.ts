@@ -3,7 +3,7 @@ import { Component, ContentChild, Input, OnDestroy, OnInit, TemplateRef } from '
 import { interval, Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { StoreService } from '../store/store.service';
-import { IAppBar } from '../types/store';
+import { IAppBar, ILeftNav } from '../types/store';
 
 @Component({
 	selector: 'app-rider-shell',
@@ -16,7 +16,7 @@ export class RiderShellComponent implements OnInit, OnDestroy {
 	subs: Subscription = new Subscription();
 	@ContentChild('appBarTemplate') appBarTemplateRef: TemplateRef<any>;
 
-	@Input() leftNav: any;
+	@Input() leftNav: ILeftNav;
 	@ContentChild('leftNavTemplate') leftNavTemplateRef: TemplateRef<any>;
 
 	@Input() page: any;
@@ -24,17 +24,41 @@ export class RiderShellComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		// initialize store fields
-		this.store.put('appBar', {appTitle: `WMATA TITLE`, menuBtn: true});
-		this.store.put('leftNav', {opened: true});
+		this.store.put('appBar', { appTitle: `WMATA TITLE`, menuBtn: true });
+		this.store.put('leftNav', {
+			opened: true, items: [
+				{
+					url: '/link1',
+					title: 'Link 1',
+					icon: ''
+				},
+				{
+					url: '/link2',
+					title: 'Link 2',
+					icon: ''
+				},
+				{
+					url: '/link3',
+					title: 'Link 3',
+					icon: ''
+				},
+				{
+					url: '/link4',
+					title: 'Link 4',
+					icon: ''
+				},
+
+			]
+		});
 
 		// subscribe to the stream of appBar data packets
 		this.subs.add(this.store.get('appBar').subscribe(d => {
-			this.appBar = { ...d}
+			this.appBar = { ...d }
 		}));
 
 		// subscribe to the stream of leftNav data packets
 		this.subs.add(this.store.get('leftNav').subscribe(data => {
-			this.leftNav = { ...data}
+			this.leftNav = { ...data }
 		}));
 	}
 
@@ -47,7 +71,7 @@ export class RiderShellComponent implements OnInit, OnDestroy {
 	constructor(private breakpointObserver: BreakpointObserver, private store: StoreService) { }
 
 	menuBtnClicked() {
-		this.store.put('leftNav', {...this.leftNav, opened: !this.leftNav.opened});
+		this.store.put('leftNav', { ...this.leftNav, opened: !this.leftNav.opened });
 	}
 
 	ngOnDestroy(): void {

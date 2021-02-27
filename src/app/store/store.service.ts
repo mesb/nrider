@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IStore, IAppBar, NRIDER_STATE, NRIDER_TYPE } from '../types/store';
+import { IStore, IAppBar } from '../types/store';
 
 @Injectable({
 	providedIn: 'root'
