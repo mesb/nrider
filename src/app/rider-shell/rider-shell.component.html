@@ -1,11 +1,11 @@
 <!-- default app bar template that's used if client does not supply a custom template-->
 <ng-template #defaultAppBarTemplate let-appBar>
-    <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="appBar?.menuBtn">
+    <button (click)="menuBtnClicked()" type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="appBar?.menuBtn">
 		<mat-icon aria-label="Side nav toggle icon">
 			menu
 		</mat-icon>
 	  </button>
-    <span>nrider</span>
+    <span> {{ appBar?.appTitle || 'nrider'}} </span>
 </ng-template>
 
 <!-- default left nav if client does not supply custom left nav-->
@@ -25,14 +25,15 @@
 </ng-template>
 
 <!-- real estate for the app bar or the customized app bar passed in by client-->
-<mat-toolbar class="mat-elevation-z22" color="primary">
+<mat-toolbar color="primary">
     <ng-container [ngTemplateOutlet]="appBarTemplateRef || defaultAppBarTemplate" [ngTemplateOutletContext]="{ $implicit: appBar }"></ng-container>
 </mat-toolbar>
 
 <!-- side nav container real estate. This harbors the left nav and the main page viewed-->
 <mat-sidenav-container class="sidenav-container">
     <!-- spot for the left nav -->
-    <mat-sidenav class="sidenav" [fixedInViewport]="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="leftNav?.opened">
+    <!-- <mat-sidenav class="sidenav" [fixedInViewport]="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="leftNav?.opened"> -->
+    <mat-sidenav class="sidenav" [fixedInViewport]="leftNav?.fixed" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'side'" [opened]="leftNav?.opened">
         <ng-container [ngTemplateOutlet]=" leftNavTemplateRef || defaultLeftNavTemplate" [ngTemplateOutletContext]="{ $implicit: leftNav }">
         </ng-container>
     </mat-sidenav>

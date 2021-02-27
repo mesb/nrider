@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StoreService } from 'src/app/store/store.service';
 
 @Component({
   selector: 'app-index',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  constructor() { }
+  constructor(public store: StoreService) { }
 
   ngOnInit(): void {
+	  console.log('the store data is: ', this.store)
+	//   this.store.putData('appBar', {title: 'WMWA RIDER', menuBtn: false})
   }
 
 }

@@ -12,12 +12,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RiderShellComponent } from './rider-shell/rider-shell.component';
 import { IndexComponent } from './pages/index/index.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		RiderShellComponent,
 		IndexComponent,
+		NotFoundComponent,
 	],
 	imports: [
 		BrowserModule,
