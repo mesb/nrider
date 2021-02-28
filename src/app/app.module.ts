@@ -14,6 +14,7 @@ import { RiderShellComponent } from './rider-shell/rider-shell.component';
 import { IndexComponent } from './pages/index/index.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
 	declarations: [
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		LayoutModule,
+		StoreModule,
 		MatToolbarModule,
 		MatButtonModule,
 		MatSidenavModule,

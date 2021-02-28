@@ -24,7 +24,7 @@ export class IndexComponent implements OnInit, OnDestroy {
 		console.log('the store data is: ', this.store)
 		//   this.store.putData('appBar', {title: 'WMWA RIDER', menuBtn: false})
 
-		this.subs.add(this.store.fetch('routes', `https://api-v3.mbta.com/routes`).subscribe(data => {
+		this.subs.add(this.store.fetch('routes/0', `https://api-v3.mbta.com/routes`).subscribe(data => {
 			this.routes = {...data};
 		}));
 

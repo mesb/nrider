@@ -11,8 +11,11 @@ import { IStore, IAppBar } from '../types/store';
 })
 export class StoreService implements IStore {
 	private data: Map<string, BehaviorSubject<any>>;
-	private headers = {
-		headers: new HttpHeaders().set('Authorization', `${environment.mbtaKey}`)
+	private httpOptions = {
+		headers: new HttpHeaders({
+			'Content-Type': `application/vnd.api+json`,
+			// Authorization: 'my-auth-token'
+		})
 	}
 
 	constructor(private http: HttpClient) {
@@ -40,7 +43,12 @@ export class StoreService implements IStore {
 	}
 
 	// fetch data for given path
-	fetch(key: string, url: string): Observable<any> {
+	fetch(key: string, url?: string): Observable<any> {
+
+		if (!!!url) {
+			return this.get(key);
+		}
+
 		return this.http.get(url)
 			.pipe(
 				tap(() => this.put(`${key}State`, 'loaded')),
