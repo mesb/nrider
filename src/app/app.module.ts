@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { RiderShellComponent } from './rider-shell/rider-shell.component';
 import { IndexComponent } from './pages/index/index.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 		MatButtonModule,
 		MatSidenavModule,
 		MatIconModule,
+		HttpClientModule,
 		MatListModule
 	],
 	providers: [],

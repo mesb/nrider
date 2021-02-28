@@ -1,5 +1,10 @@
 import { BehaviorSubject, Observable } from "rxjs";
 
+export enum RouteTypes {
+	LightRail,
+	HeavyRail
+}
+
 export interface IAppBar {
 	menuBtn: boolean;
 	appTitle: string;

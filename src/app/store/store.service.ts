@@ -1,5 +1,9 @@
+import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { error } from 'protractor';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { IStore, IAppBar } from '../types/store';
 
 @Injectable({
@@ -7,8 +11,11 @@ import { IStore, IAppBar } from '../types/store';
 })
 export class StoreService implements IStore {
 	private data: Map<string, BehaviorSubject<any>>;
+	private headers = {
+		headers: new HttpHeaders().set('Authorization', `${environment.mbtaKey}`)
+	}
 
-	constructor() {
+	constructor(private http: HttpClient) {
 		this.data = new Map();
 	}
 
@@ -29,8 +36,22 @@ export class StoreService implements IStore {
 	// put item in store for given key
 	put(key: string, payload: any) {
 		this.initKey(key);
-		this.data.get(key).next(payload) ;
+		this.data.get(key).next(payload);
+	}
 
-
+	// fetch data for given path
+	fetch(key: string, url: string): Observable<any> {
+		return this.http.get(url)
+			.pipe(
+				tap(() => this.put(`${key}State`, 'loaded')),
+				switchMap((result: any) => {
+					this.put(key, result);
+					return this.get(key);
+				}),
+				catchError((error: Error) => {
+					this.put(`${key}Error`, error);
+					return of(null);
+				})
+			)
 	}
 }
