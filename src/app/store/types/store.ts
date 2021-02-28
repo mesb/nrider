@@ -1,8 +1,12 @@
 import { BehaviorSubject, Observable } from "rxjs";
 
-export enum RouteTypes {
+// route types
+export enum ROUTE_TYPE {
 	LightRail,
-	HeavyRail
+	HeavyRail,
+	CommuterRail,
+	Bus,
+	Ferry
 }
 
 export interface IAppBar {

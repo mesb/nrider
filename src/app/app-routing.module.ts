@@ -1,13 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IndexComponent } from './pages/index/index.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-
+import { NotFoundComponent } from './pages/components/not-found/not-found.component';
 const routes: Routes = [
-	{
-		path: 'index',
-		component: IndexComponent
-	},
 	{
 		path: '',
 		redirectTo: 'index',

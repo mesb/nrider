@@ -4,7 +4,9 @@ import { error } from 'protractor';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { IStore, IAppBar } from '../types/store';
+import { IStore, IAppBar } from './types/store';
+
+export const MBTA_URL_BASE = `https://api-v3.mbta.com/`;
 
 @Injectable({
 	providedIn: 'root'
@@ -49,11 +51,11 @@ export class StoreService implements IStore {
 			return this.get(key);
 		}
 
-		return this.http.get(url)
+		return this.http.get(`${MBTA_URL_BASE}${url}`)
 			.pipe(
 				tap(() => this.put(`${key}State`, 'loaded')),
 				switchMap((result: any) => {
-					this.put(key, result);
+					this.put(key, result?.data);
 					return this.get(key);
 				}),
 				catchError((error: Error) => {

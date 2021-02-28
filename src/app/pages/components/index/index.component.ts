@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { StoreService } from 'src/app/store/store.service';
+import { ROUTE_TYPE } from 'src/app/store/types/store';
+
 
 @Component({
 	selector: 'app-index',
@@ -22,9 +24,10 @@ export class IndexComponent implements OnInit, OnDestroy {
 
 
 		console.log('the store data is: ', this.store)
+		console.log('the ROUTE TYPES are: ', ROUTE_TYPE)
 		//   this.store.putData('appBar', {title: 'WMWA RIDER', menuBtn: false})
 
-		this.subs.add(this.store.fetch('routes/0', `https://api-v3.mbta.com/routes`).subscribe(data => {
+		this.subs.add(this.store.fetch('routes', `routes?sort=type&filter[type]=${ROUTE_TYPE.LightRail}`).subscribe(data => {
 			this.routes = {...data};
 		}));
 

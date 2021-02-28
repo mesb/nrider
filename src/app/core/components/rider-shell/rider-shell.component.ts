@@ -2,8 +2,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, ContentChild, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { interval, Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { StoreService } from '../store/store.service';
-import { IAppBar, ILeftNav } from '../types/store';
+import { StoreService } from '../../../store/store.service';
+import { IAppBar, ILeftNav } from '../../../store/types/store';
 
 @Component({
 	selector: 'app-rider-shell',
