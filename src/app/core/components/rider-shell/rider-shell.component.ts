@@ -24,7 +24,7 @@ export class RiderShellComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		// initialize store fields
-		this.store.put('appBar', { appTitle: `WMATA TITLE`, menuBtn: false });
+		this.store.put('appBar', { appTitle: `NUMERATOR NG CHALLENGE`, menuBtn: false });
 		this.store.put('leftNav', {
 			opened: false, items: [
 				{
