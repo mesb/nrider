@@ -5,6 +5,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { CoreModule } from '../core/core.module';
 import { IndexComponent } from './components/index/index.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { MaterialModule } from '../material/material/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,6 +16,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   imports: [
     CommonModule,
 	CoreModule,
+	FormsModule,
+	ReactiveFormsModule,
+	MaterialModule,
     PagesRoutingModule
   ],
   exports: [

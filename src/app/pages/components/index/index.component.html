@@ -1,9 +1,65 @@
 <ng-template #pageTemplate>
-    <h3> TRAIN FINDER </h3>
+    <article class="window">
+
+        <h3 class="train-finder"> TRAIN FINDER
+            <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">train</mat-icon>
+        </h3>
+
+        <section class="content">
+            <form [formGroup]="trainForm">
+
+                <ng-container *ngFor="let selector of selectors">
+
+                    <ng-container *ngIf="selector.type === FORM_FIELDS.Chips">
+                        <ng-container *ngIf="routeTypes$ | async as routeTypes">
+                            <section class="route-types">
+                                <mat-chip-list aria-label="Route Type Selection">
+                                    <mat-chip [disabled]="routeType.selectable" *ngFor="let routeType of routeTypes" [selectable]="routeType.selectable" [selected]="routeType.selected" (click)="toggleRouteType(routeType, routeTypes)"> {{ routeType.name }} </mat-chip>
+                                </mat-chip-list>
+                            </section>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="selector.type === FORM_FIELDS.Select && (selector.options$ | async) as options">
+                        <mat-form-field appearance="outline" *ngIf="!!options && options?.length > 0">
+
+                            <mat-label>{{ selector.prompt }} </mat-label>
+                            <mat-select [formControlName]="selector.fcn" (selectionChange)="handleSelection($event?.value, selector)">
+                                <mat-option *ngFor="let option of selector.options$ | async" [value]="option.id">
+                                    {{ option.title }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
 
 
+                    <ng-container *ngIf="selector.type === FORM_FIELDS.View">
+                        <ng-container *ngIf="predictions$ | async as predictions">
+                            <ng-container *ngFor="let pred of predictions">
+                                <section *ngIf="!!pred">
+                                    <span class="next-prediction mat-elevation-z3" *ngIf="!!pred.departure_time; else noDepartureTimeFound">
+										<h2 color="primary">
+											Next Departure Time:
+										</h2>
+										<h2>
+											{{ pred?.departure_time | date:'shortTime'}}
+										</h2>
+									</span>
+                                </section>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+
+            </form>
+        </section>
+    </article>
 </ng-template>
 
 
+<ng-template #noDepartureTimeFound>
+    <h2>No Departure Time Found for your options</h2>
+</ng-template>
 
-<app-rider-shell [pageTemplate]="pageTemplate"></app-rider-shell>
+
+<app-rider-shell [pageTemplate]="pageTemplate "></app-rider-shell>
