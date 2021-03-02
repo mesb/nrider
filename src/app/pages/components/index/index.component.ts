@@ -2,7 +2,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
-import { debounce, debounceTime, distinctUntilChanged, filter, map, mapTo, skip, startWith, switchMap, take, tap } from 'rxjs/operators';
+import { debounce, debounceTime, distinctUntilChanged, filter, map, mapTo, skip, startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { StoreService } from 'src/app/store/store.service';
 import { ACTION_TYPES, FORM_CONTROL_NAMES, KEY_TYPES, routeTypeName, ROUTE_TYPE, SELECTOR_TYPE } from 'src/app/store/types/store';
 import { FIELD_TYPES } from 'src/app/store/types/forms';
@@ -93,6 +93,9 @@ const fieldsConfig = [
 
 
 export class IndexComponent implements OnInit, OnDestroy {
+	// used for clearing local observable subscriptions
+	onDestroy$ = new Subject();
+
 	// the list of form fields
 	FORM_FIELDS = FIELD_TYPES;
 	// the form that helps a user select a train
@@ -126,6 +129,7 @@ export class IndexComponent implements OnInit, OnDestroy {
 
 		// get the directions for the given route and send to the selectedRouteDirections$ stream
 		this.getDirectionsForRoute$.pipe(
+			takeUntil(this.onDestroy$),
 			switchMap(id => this.store.get(this.store.makeTypeKey(SELECTOR_TYPE.ROUTES, KEY_TYPES.Options))
 				.pipe(
 					filter(dat => !!dat),
@@ -272,6 +276,10 @@ export class IndexComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
+
+		// fire to the observables that others listen to until this point and then complete the watched
+		this.onDestroy$.next();
+		this.onDestroy$.complete();
 	}
 
 }
